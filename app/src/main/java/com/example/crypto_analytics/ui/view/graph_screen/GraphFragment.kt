@@ -1,15 +1,17 @@
-package com.example.crypto_analytics.ui.view
+package com.example.crypto_analytics.ui.view.graph_screen
 
-import android.app.Application
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.example.crypto_analytics.R
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class GraphFragment : Fragment(R.layout.fragment_graph) {
     private lateinit var chart: LineChart
@@ -18,6 +20,7 @@ class GraphFragment : Fragment(R.layout.fragment_graph) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         chart = view.findViewById(R.id.chart) as LineChart
         setLineChartData()
+
     }
 
 
@@ -45,6 +48,11 @@ class GraphFragment : Fragment(R.layout.fragment_graph) {
         chart.let {
             it.data = lineData
             it.animateXY(3000, 3000)
+            it.description.isEnabled = false
         }
+//        MainScope().launch {
+//            delay(1000)
+//
+//        }
     }
 }
