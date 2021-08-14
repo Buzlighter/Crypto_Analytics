@@ -23,7 +23,6 @@ class GraphFragment : Fragment(R.layout.fragment_graph) {
 
     }
 
-
     private fun setLineChartData() {
         val lineEntry = mutableListOf(
             Entry(1f, 100f),

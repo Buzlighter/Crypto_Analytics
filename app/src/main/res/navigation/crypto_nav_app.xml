@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/crypto_nav_app"
+    app:startDestination="@id/pagerContainerFragment">
+    <fragment
+        android:id="@+id/pagerContainerFragment"
+        android:name="com.example.crypto_analytics.ui.common.PagerContainerFragment"
+        android:label="fragment_pager_container"
+        tools:layout="@layout/fragment_pager_container" />
+</navigation>
