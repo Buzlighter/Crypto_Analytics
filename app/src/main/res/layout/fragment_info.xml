@@ -5,5 +5,4 @@
     android:layout_height="match_parent"
     tools:context=".ui.view.info_screen.InfoFragment"
     android:background="@color/purple_700">
-
 </androidx.core.widget.NestedScrollView>

@@ -8,5 +8,18 @@
         android:id="@+id/pagerContainerFragment"
         android:name="com.example.crypto_analytics.ui.common.PagerContainerFragment"
         android:label="fragment_pager_container"
-        tools:layout="@layout/fragment_pager_container" />
+        tools:layout="@layout/fragment_pager_container" >
+        <action
+            android:id="@+id/action_pagerContainerFragment_to_nav_from_graph_fragment"
+            app:destination="@id/nav_from_graph_fragment" />
+        <action
+            android:id="@+id/action_pagerContainerFragment_to_nav_from_news_fragment"
+            app:destination="@id/nav_from_news_fragment" />
+        <action
+            android:id="@+id/action_pagerContainerFragment_to_nav_from_info_fragment"
+            app:destination="@id/nav_from_info_fragment" />
+    </fragment>
+    <include app:graph="@navigation/nav_from_graph_fragment" />
+    <include app:graph="@navigation/nav_from_info_fragment" />
+    <include app:graph="@navigation/nav_from_news_fragment" />
 </navigation>

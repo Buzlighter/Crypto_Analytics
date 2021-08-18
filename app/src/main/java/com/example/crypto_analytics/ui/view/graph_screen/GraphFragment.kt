@@ -2,8 +2,10 @@ package com.example.crypto_analytics.ui.view.graph_screen
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import com.example.crypto_analytics.R
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
@@ -16,11 +18,14 @@ import kotlinx.coroutines.launch
 class GraphFragment : Fragment(R.layout.fragment_graph) {
     private lateinit var chart: LineChart
 
+    companion object {
+        fun newInstance() = GraphFragment()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         chart = view.findViewById(R.id.chart) as LineChart
-        setLineChartData()
 
+        setLineChartData()
     }
 
     private fun setLineChartData() {
