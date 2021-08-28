@@ -1,8 +1,6 @@
 package com.example.crypto_analytics.data.util
 
-class ServerAccess {
-    companion object {
-       const val CoinMarketCapURL = "https://pro-api.coinmarketcap.com/"
-       private const val CoinMarketCapKEY = "5c3b5b00-6285-4049-8a79-09c1dff506e9"
-    }
+object ServerAccess {
+    const val NOMICS_BASE_URL = "https://api.nomics.com/v1/"
+    private const val COIN_MARKET_KEY = "4f80a71c50d9fb396efc2d7d5ca9f2e400195e2c"
 }

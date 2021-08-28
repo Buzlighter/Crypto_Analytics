@@ -10,7 +10,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     lateinit var navHostFragment: NavHostFragment
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
