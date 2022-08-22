@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/graphFragment"
-        android:icon="@drawable/ic_baseline_bar_chart_24"
-        android:title="Граффик" />
+        android:id="@+id/menu_graphFragment"
+        android:icon="@drawable/ic_baseline_home"
+        android:title= "@string/home_screen_name" />
 
     <item
-        android:id="@+id/newsFragment"
-        android:icon="@drawable/ic_baseline_article_24"
-        android:title="Новости"/>
+        android:id="@+id/menu_newsFragment"
+        android:icon="@drawable/ic_baseline_article"
+        android:title="@string/news_screen_name"/>
 
     <item
-        android:id="@+id/infoFragment"
-        android:icon="@drawable/ic_baseline_info_24"
-        android:title="Информация"/>
+        android:id="@+id/menu_infoFragment"
+        android:icon="@drawable/ic_baseline_info"
+        android:title="@string/info_screen_name"/>
 </menu>

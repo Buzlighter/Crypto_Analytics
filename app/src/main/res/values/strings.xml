@@ -1,7 +1,30 @@
 <resources>
     <string name="app_name">Crypto_Analytics</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="interval_arr">
+        <item>30</item>
+        <item>7</item>
+    </string-array>
+    <string-array name="crypto_currency_arr">
+        <item>bitcoin</item>
+        <item>ethereum</item>
+        <item>maker</item>
+        <item>monero</item>
+        <item>binancecoin</item>
+        <item>litecoin</item>
+    </string-array>
+
+    <string-array name="fiat_currency_arr">
+        <item>usd</item>
+        <item>eur</item>
+        <item>rub</item>
+    </string-array>
+
+    <string name="home_screen_name">Главная</string>
+    <string name="news_screen_name">Новости</string>
+    <string name="info_screen_name">Информация</string>
+    <string name="details_screen_name">Детали</string>
+
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

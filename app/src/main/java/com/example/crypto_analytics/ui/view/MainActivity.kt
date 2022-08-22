@@ -1,17 +1,30 @@
 package com.example.crypto_analytics.ui.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.fragment.NavHostFragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.example.crypto_analytics.R
+import com.example.crypto_analytics.databinding.ActivityMainBinding
 
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
-
-    lateinit var navHostFragment: NavHostFragment
+class MainActivity : AppCompatActivity() {
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val navController = findNavController(R.id.fragment)
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        binding.mainToolbar.setupWithNavController(navController, appBarConfiguration)
+
+
     }
+
+
+
 }

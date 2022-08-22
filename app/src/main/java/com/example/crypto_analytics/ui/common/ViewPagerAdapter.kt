@@ -1,25 +1,25 @@
 package com.example.crypto_analytics.ui.common
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.crypto_analytics.ui.view.graph_screen.GraphFragment
-import com.example.crypto_analytics.ui.view.info_screen.InfoFragment
-import com.example.crypto_analytics.ui.view.news_screen.NewsFragment
 
-class ViewPagerAdapter(
-    private val fragmentList: List<Fragment>,
-    fragmentManager: FragmentManager,
-    lifecycle: Lifecycle): FragmentStateAdapter(fragmentManager, lifecycle) {
-
-    override fun getItemCount(): Int {
-       return fragmentList.size
-    }
+class ViewPagerAdapter(fragmentManager: FragmentManager,
+                       lifecycle: Lifecycle,
+                       var listOfFragments: List<Fragment>): FragmentStateAdapter(fragmentManager, lifecycle) {
 
     override fun createFragment(position: Int): Fragment {
-       return fragmentList[position]
+
+        return when(position) {
+            0 -> listOfFragments[position]
+            1 -> listOfFragments[position]
+            else -> listOfFragments[position]
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return listOfFragments.size
     }
 
 }
