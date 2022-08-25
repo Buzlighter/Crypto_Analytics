@@ -1,13 +1,18 @@
 package com.example.crypto_analytics.data.repository
 
 import com.example.crypto_analytics.data.api.CryptoService
+import com.example.crypto_analytics.data.api.NewsDataService
+import com.example.crypto_analytics.data.db.NewsBaseDao
 import com.example.crypto_analytics.data.model.CryptoEntity
+import com.example.crypto_analytics.data.model.NewsData
 import com.example.crypto_analytics.data.util.Resource
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
 
-class CryptoRepositoryImpl @Inject constructor(val cryptoService: CryptoService) {
+class CryptoRepositoryImpl @Inject constructor(val cryptoService: CryptoService,
+                                               val newsBaseDao: NewsBaseDao,
+                                               val newsDataService: NewsDataService) {
     companion object {
         const val INTERVAL = "daily"
     }
@@ -36,4 +41,5 @@ class CryptoRepositoryImpl @Inject constructor(val cryptoService: CryptoService)
         }
         return Resource.Success(CryptoEntity(listOfPrice))
     }
+
 }

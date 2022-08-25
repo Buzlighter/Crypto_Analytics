@@ -9,4 +9,7 @@ object Constants {
     const val LANGUAGE_NEWS_QUERY = "ru"
 
     const val NEWS_TO_DETAILS_BUNDLE_KEY = "news"
+
+    const val DB_NAME = "crypto_db"
+    const val DB_TABLE_NAME_NEWS = "news"
 }

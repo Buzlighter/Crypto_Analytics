@@ -2,6 +2,7 @@ package com.example.crypto_analytics.ui.view.home_screen
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,6 @@ import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter
 import lecho.lib.hellocharts.gesture.ContainerScrollType
 import lecho.lib.hellocharts.gesture.ZoomType
 import lecho.lib.hellocharts.model.*
-import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -55,6 +55,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         appComponent.inject(this)
         binding.graphDataFragment.button.setOnClickListener {
+            Log.d("TEEST", parentFragmentManager.findFragmentById(R.id.nav_host)?.childFragmentManager?.fragments.toString())
             findNavController().navigate(R.id.action_pagerContainerFragment_to_blankFragment)
         }
 

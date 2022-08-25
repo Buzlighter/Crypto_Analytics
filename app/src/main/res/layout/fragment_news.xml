@@ -2,26 +2,41 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/black"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.view.news_screen.NewsFragment">
 
+        <SearchView
+            android:id="@+id/news_searcher"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/view_shape"
+            android:iconifiedByDefault="false"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <SearchView
-        android:id="@+id/news_searcher"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:iconifiedByDefault="false"
-        android:background="@color/white"
-        android:layout_margin="10dp"
-        app:layout_constraintTop_toTopOf="parent"/>
+        <include
+            android:id="@+id/toggle_button_layout"
+            layout="@layout/toggle_group_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintTop_toBottomOf="@id/news_searcher" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/news_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
-        app:layout_constraintTop_toBottomOf="@id/news_searcher"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/news_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="130dp"
+            app:layout_constraintTop_toBottomOf="@id/news_searcher" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/favorite_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="130dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/news_searcher" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,26 +12,19 @@
         tools:layout="@layout/fragment_pager_container" >
 
         <action
-            android:id="@+id/action_pagerContainerFragment_to_blankFragment"
-            app:destination="@id/blankFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
-
-        <action
             android:id="@+id/action_pagerContainerFragment_to_detailsFragment"
             app:destination="@id/detailsFragment"/>
+        <action
+            android:id="@+id/action_pagerContainerFragment_to_blankFragment"
+            app:destination="@id/blankFragment" />
 
     </fragment>
-
-
 
     <fragment
-        android:id="@+id/graphFragment"
-        android:name="com.example.crypto_analytics.ui.view.home_screen.HomeFragment"
-        android:label="GraphFragment" >
-    </fragment>
+        android:id="@+id/detailsFragment"
+        android:name="com.example.crypto_analytics.ui.view.news_screen.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details"/>
 
     <fragment
         android:id="@+id/blankFragment"
@@ -39,21 +32,5 @@
         android:label="fragment_blank"
         tools:layout="@layout/fragment_blank" />
 
-    <fragment
-        android:id="@+id/infoFragment"
-        android:name="com.example.crypto_analytics.ui.view.info_screen.InfoFragment"
-        android:label="fragment_info"
-        tools:layout="@layout/fragment_info" />
-
-    <fragment
-        android:id="@+id/newsFragment"
-        android:name="com.example.crypto_analytics.ui.view.news_screen.NewsFragment"
-        android:label="fragment_news"
-        tools:layout="@layout/fragment_news" />
-    <fragment
-        android:id="@+id/detailsFragment"
-        android:name="com.example.crypto_analytics.ui.view.news_screen.DetailsFragment"
-        android:label="fragment_details"
-        tools:layout="@layout/fragment_details" />
 
 </navigation>

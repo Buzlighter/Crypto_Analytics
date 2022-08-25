@@ -1,13 +1,14 @@
 package com.example.crypto_analytics
 
 import android.app.Application
+import com.example.crypto_analytics.data.db.CryptoDataBase
 import com.example.crypto_analytics.data.util.Constants
 import com.example.crypto_analytics.di.components.AppComponent
 import com.example.crypto_analytics.di.components.DaggerAppComponent
+import com.example.crypto_analytics.di.modules.AppModule
 import com.example.crypto_analytics.di.modules.CryptoNetworkModule
+import com.example.crypto_analytics.di.modules.DataBaseModule
 import com.example.crypto_analytics.di.modules.NewsNetworkModule
-import timber.log.Timber
-import timber.log.Timber.DebugTree
 
 class App: Application() {
 
@@ -16,12 +17,10 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
         appComponent = DaggerAppComponent.builder()
+            .appModule(AppModule(this))
             .cryptoNetworkModule(CryptoNetworkModule())
             .newsNetworkModule(NewsNetworkModule())
+            .dataBaseModule(DataBaseModule())
             .build()
-
-        if(BuildConfig.DEBUG) {
-            Timber.plant(DebugTree())
-        }
     }
 }

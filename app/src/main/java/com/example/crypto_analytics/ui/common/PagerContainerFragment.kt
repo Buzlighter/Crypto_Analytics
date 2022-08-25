@@ -1,6 +1,7 @@
 package com.example.crypto_analytics.ui.common
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,12 +17,13 @@ import com.example.crypto_analytics.ui.view.news_screen.NewsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 
-class PagerContainerFragment : Fragment(R.layout.fragment_pager_container) {
+class PagerContainerFragment : Fragment() {
     var _binding: FragmentPagerContainerBinding? = null
     val binding get() = _binding!!
 
-    var bottomNavigationView: BottomNavigationView? = null
-    private lateinit var viewPager: ViewPager2
+    companion object {
+       lateinit var bottomNavigationView: BottomNavigationView
+    }
 
     private val  listOfFragmentTabs = listOf(
         HomeFragment(),
@@ -37,14 +39,14 @@ class PagerContainerFragment : Fragment(R.layout.fragment_pager_container) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        bottomNavigationView = view.findViewById(R.id.bottom_nav_view)
-        viewPager = view.findViewById(R.id.view_pager)
-
         val adapter = ViewPagerAdapter(childFragmentManager, lifecycle, listOfFragmentTabs)
-        viewPager.adapter = adapter
+        binding.apply {
+            viewPager.adapter = adapter
+            viewPager.registerOnPageChangeCallback(pageListener)
+            bottomNavView.setOnItemSelectedListener(itemSelectedListener)
+        }
 
-        viewPager.registerOnPageChangeCallback(pageListener)
-        bottomNavigationView?.setOnItemSelectedListener(itemSelectedListener)
+        bottomNavigationView = binding.bottomNavView
 
         //Handle Back Pressed
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, true, handleOnBackPressed)
@@ -52,9 +54,10 @@ class PagerContainerFragment : Fragment(R.layout.fragment_pager_container) {
 
 
     private val handleOnBackPressed = fun OnBackPressedCallback.() {
-        val previousItem = viewPager.currentItem - 1
+        Log.d("TEEST","CONTAINER----${parentFragmentManager.findFragmentById(R.id.nav_host)?.childFragmentManager?.fragments}")
+        val previousItem = binding.viewPager.currentItem - 1
         if (previousItem >= 0) {
-            viewPager.currentItem = previousItem
+            binding.viewPager.currentItem = previousItem
         } else {
             this.remove()
             requireActivity().onBackPressed()
@@ -63,15 +66,15 @@ class PagerContainerFragment : Fragment(R.layout.fragment_pager_container) {
     private val itemSelectedListener = NavigationBarView.OnItemSelectedListener { item ->
         when(item.itemId) {
             R.id.menu_graphFragment -> {
-                viewPager.currentItem = 0
+                binding.viewPager.currentItem = 0
                 return@OnItemSelectedListener true
             }
             R.id.menu_newsFragment -> {
-                viewPager.currentItem = 1
+                binding.viewPager.currentItem = 1
                 return@OnItemSelectedListener true
             }
             R.id.menu_infoFragment -> {
-                viewPager.currentItem = 2
+                binding.viewPager.currentItem = 2
                 return@OnItemSelectedListener true
             }
             else -> false
@@ -81,7 +84,7 @@ class PagerContainerFragment : Fragment(R.layout.fragment_pager_container) {
     private val pageListener = object: ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
-            bottomNavigationView?.menu?.getItem(position)?.isChecked = true
+            binding.bottomNavView.menu.getItem(position)?.isChecked = true
         }
     }
 }

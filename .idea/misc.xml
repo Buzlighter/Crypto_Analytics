@@ -10,21 +10,42 @@
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/drawable/ic_baseline_bar_chart_24.xml" value="0.29907407407407405" />
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/drawable/ic_baseline_home.xml" value="0.209" />
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.199" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/drawable/ic_menu_camera.xml" value="0.21" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.21" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/drawable/side_nav_bar.xml" value="0.21" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/drawable/view_shape.xml" value="0.21" />
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/activity_main.xml" value="0.17831813576494426" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/activity_main2.xml" value="0.35054347826086957" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/app_bar_main.xml" value="0.35054347826086957" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/btttn.xml" value="0.18697916666666667" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/content_main.xml" value="0.35054347826086957" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/custom_home_fragment_button.xml" value="0.1890625" />
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/drop_down_item.xml" value="0.348731884057971" />
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/dropdown_item.xml" value="0.348731884057971" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/fragment_all.xml" value="0.18802083333333333" />
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/fragment_blank.xml" value="0.17831813576494426" />
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/fragment_details.xml" value="0.35054347826086957" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/fragment_favorite.xml" value="0.184375" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/fragment_gallery.xml" value="0.35054347826086957" />
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/fragment_graph.xml" value="0.33" />
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/fragment_home.xml" value="0.35054347826086957" />
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/fragment_info.xml" value="0.17831813576494426" />
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/fragment_news.xml" value="0.348731884057971" />
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/fragment_pager_container.xml" value="0.13179347826086957" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/fragment_slideshow.xml" value="0.35054347826086957" />
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/graph_data_layout.xml" value="0.348731884057971" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/nav_header.xml" value="0.35054347826086957" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/nav_header_main.xml" value="0.35054347826086957" />
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/news_holder.xml" value="0.1890625" />
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/pager_layout.xml" value="0.348731884057971" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/toggle_group_button.xml" value="0.35054347826086957" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/layout/toolbar.xml" value="0.35054347826086957" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/menu/activity_main_drawer.xml" value="0.36666666666666664" />
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/menu/bottom_navigation.xml" value="0.2564814814814815" />
         <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/menu/line_chart.xml" value="0.365625" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/menu/main_activity2.xml" value="0.36666666666666664" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/menu/nav_drawer_manu.xml" value="0.365625" />
+        <entry key="..\:/workspace/Crypto_Analytics/app/src/main/res/menu/nav_drawer_menu.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

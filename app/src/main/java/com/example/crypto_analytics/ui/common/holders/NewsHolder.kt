@@ -23,9 +23,17 @@ class NewsHolder(val binding: NewsHolderBinding): RecyclerView.ViewHolder(bindin
 
             description.text = newsItem.description
 
-           root.setOnClickListener {
-               newsClickListener.onClick(newsItem, position)
-           }
+            root.apply {
+                setOnClickListener {
+                    newsClickListener.onClick(newsItem, position)
+                }
+
+                setOnLongClickListener {
+                    newsClickListener.onLongClick(newsItem, position)
+                    return@setOnLongClickListener true
+                }
+            }
+
         }
     }
 }

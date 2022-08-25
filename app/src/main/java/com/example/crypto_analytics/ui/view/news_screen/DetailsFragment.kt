@@ -34,7 +34,6 @@ class DetailsFragment : Fragment() {
 
 
         setNewsData(newsData)
-
     }
 
 
@@ -52,7 +51,7 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    fun convertDateFormat(date: String?): String {
+    fun convertDateFormat(date: String): String {
         val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
         val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
         return parser.parse(date)?.let { formatter.format(it) } ?: ""
