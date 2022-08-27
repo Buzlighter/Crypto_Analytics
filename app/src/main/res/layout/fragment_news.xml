@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/black"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.view.news_screen.NewsFragment">
@@ -24,19 +24,54 @@
             android:layout_margin="10dp"
             app:layout_constraintTop_toBottomOf="@id/news_searcher" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/news_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="130dp"
-            app:layout_constraintTop_toBottomOf="@id/news_searcher" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/favorite_recycler"
+        <FrameLayout
+            android:id="@+id/all_news_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="130dp"
+            android:layout_marginTop="130dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/news_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/like_animation"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    app:lottie_autoPlay="false"
+                    android:visibility="gone"
+                    app:lottie_colorFilter="@color/red"
+                    app:lottie_loop="false"
+                    app:lottie_rawRes="@raw/exploding_heart_animation" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/favorite_news_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/news_searcher" />
+            android:layout_marginTop="130dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/favorite_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/delete_animation"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    app:lottie_autoPlay="false"
+                    android:visibility="gone"
+                    app:lottie_colorFilter="@color/red"
+                    app:lottie_loop="false"
+                    app:lottie_rawRes="@raw/heart_break_animation" />
+        </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,6 +15,7 @@ import com.example.crypto_analytics.data.model.NewsData
 import com.example.crypto_analytics.data.util.Constants
 import com.example.crypto_analytics.data.util.NewsClickListener
 import com.example.crypto_analytics.data.util.appComponent
+import com.example.crypto_analytics.data.util.customDeleteAnimation
 import com.example.crypto_analytics.databinding.FragmentNewsBinding
 import com.example.crypto_analytics.ui.common.PagerContainerFragment
 import com.example.crypto_analytics.ui.common.adapters.NewsAdapter
@@ -24,6 +24,7 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.snackbar.BaseTransientBottomBar.ANIMATION_MODE_SLIDE
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
+
 
 class NewsFragment : Fragment() {
     private var _binidng: FragmentNewsBinding? = null
@@ -34,6 +35,7 @@ class NewsFragment : Fragment() {
 
     var list = listOf<NewsData>()
     var favoriteList = mutableListOf<NewsData>()
+    var snackBarAdd: Snackbar? = null
 
     @Inject
     lateinit var newsViewModelFactory: NewsViewModelFactory
@@ -65,6 +67,23 @@ class NewsFragment : Fragment() {
         binding.newsSearcher.setOnQueryTextListener(onQueryListener)
         binding.toggleButtonLayout.toggleGroupButton.addOnButtonCheckedListener(groupBtnCheckedListener)
 
+    }
+
+    override fun onResume() {
+        (activity as MainActivity).binding.mainToolbar.title = resources.getString(R.string.news_screen_name)
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.likeAnimation.visibility = View.GONE
+        binding.deleteAnimation.visibility = View.GONE
+        snackBarAdd?.dismiss()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binidng = null
     }
 
 
@@ -103,35 +122,23 @@ class NewsFragment : Fragment() {
         if (isChecked) {
             when (checkedId) {
                 R.id.btn_all -> {
-                    binding.newsRecycler.visibility = View.VISIBLE
-                    binding.favoriteRecycler.visibility = View.GONE
+                    binding.allNewsLayout.visibility = View.VISIBLE
+                    binding.favoriteNewsLayout.visibility = View.GONE
 
                     newsAdapter.differ.submitList(list)
                 }
                 R.id.btn_favorite -> {
-                    binding.newsRecycler.visibility = View.GONE
-                    binding.favoriteRecycler.visibility = View.VISIBLE
+                    binding.allNewsLayout.visibility = View.GONE
+                    binding.favoriteNewsLayout.visibility = View.VISIBLE
 
                     newsViewModel.getFavoriteNewsFromDB()
                     newsViewModel.dbLiveData.observe(viewLifecycleOwner) { dbList ->
                         favoriteList = dbList
                         favoriteAdapter.differ.submitList(favoriteList)
                     }
-                    Log.d("NEEWS", "favorite ${favoriteList.size}")
                 }
             }
         }
-    }
-
-
-    override fun onResume() {
-        (activity as MainActivity).binding.mainToolbar.title = resources.getString(R.string.news_screen_name)
-        super.onResume()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binidng = null
     }
 
     private val newsClickListener = object: NewsClickListener {
@@ -147,11 +154,17 @@ class NewsFragment : Fragment() {
 
         override fun onLongClick(newsData: NewsData, position: Int) {
             newsViewModel.insertNewsData(newsData)
-            Snackbar
-                .make(PagerContainerFragment.bottomNavigationView,"Добавлено в избранное",Snackbar.LENGTH_SHORT)
+
+            binding.likeAnimation.apply {
+                visibility = View.VISIBLE
+                playAnimation()
+            }
+            snackBarAdd = Snackbar
+                .make(this@NewsFragment.requireView(), "Добавлено в избранное", Snackbar.LENGTH_SHORT)
                 .setAnimationMode(ANIMATION_MODE_SLIDE)
                 .setAnchorView(PagerContainerFragment.bottomNavigationView)
-                .show()
+
+            snackBarAdd?.show()
         }
     }
 
@@ -167,8 +180,19 @@ class NewsFragment : Fragment() {
         }
 
         override fun onLongClick(newsData: NewsData, position: Int) {
-            favoriteList.remove(newsData)
+            val view = binding.favoriteRecycler.findViewHolderForAdapterPosition(position)?.itemView
+            customDeleteAnimation(view, requireContext(), 200)
+
             favoriteAdapter.notifyItemRemoved(position)
+            favoriteAdapter.notifyItemChanged(position)
+
+            binding.deleteAnimation.apply {
+                visibility = View.VISIBLE
+                playAnimation()
+                animate().alpha(0.7f)
+            }
+
+            favoriteList.remove(newsData)
             newsViewModel.deleteNewsItem(newsData)
         }
     }

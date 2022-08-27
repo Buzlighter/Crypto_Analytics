@@ -21,8 +21,9 @@ class NewsHolder(val binding: NewsHolderBinding): RecyclerView.ViewHolder(bindin
                 .error(R.drawable.fail_to_load_img)
                 .into(imagePoster)
 
-            description.text = newsItem.description
-
+            author.text = newsItem.author ?: context.getText(R.string.unknown_author)
+//            date.text = newsItem.publishedDate
+//            description.text = newsItem.description
             root.apply {
                 setOnClickListener {
                     newsClickListener.onClick(newsItem, position)
