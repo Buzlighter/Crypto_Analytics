@@ -19,10 +19,7 @@ class CryptoNetworkModule {
     @Named("crypto")
     fun provideHttpOkClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .addNetworkInterceptor(
-                HttpLoggingInterceptor()
-                    .setLevel(HttpLoggingInterceptor.Level.BODY)
-            )
+            .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     }
 

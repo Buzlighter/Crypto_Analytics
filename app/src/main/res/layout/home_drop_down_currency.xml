@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/currency_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Криптовалюта"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/currency_textfield"
+        app:layout_constraintEnd_toEndOf="@id/currency_textfield"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/currency_textfield"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/currency_text"
+        >
+
+        <AutoCompleteTextView
+            android:id="@+id/crypto_currency_dropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="bitcoin"
+            android:textStyle="bold"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

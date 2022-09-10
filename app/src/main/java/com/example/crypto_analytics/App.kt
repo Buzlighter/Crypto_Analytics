@@ -22,5 +22,6 @@ class App: Application() {
             .newsNetworkModule(NewsNetworkModule())
             .dataBaseModule(DataBaseModule())
             .build()
+
     }
 }

@@ -2,18 +2,25 @@ package com.example.crypto_analytics.ui.view.home_screen
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.crypto_analytics.R
-import com.example.crypto_analytics.data.util.appComponent
+import com.example.crypto_analytics.data.util.*
 import com.example.crypto_analytics.databinding.FragmentHomeBinding
+import com.example.crypto_analytics.ui.common.PagerContainerFragment
 import com.example.crypto_analytics.ui.view.MainActivity
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter
 import lecho.lib.hellocharts.gesture.ContainerScrollType
 import lecho.lib.hellocharts.gesture.ZoomType
@@ -31,6 +38,8 @@ class HomeFragment : Fragment() {
         const val AXIS_Y_NAME = "Цена"
     }
 
+    private var snackBarError: Snackbar? = null
+
     @Inject
     lateinit var serviceFactory: HomeViewModelFactory.ServiceFactory
 
@@ -42,20 +51,21 @@ class HomeFragment : Fragment() {
     var daysRange = 30
     var cryptoCurrency = "bitcoin"
     var fiatCurrency = "usd"
+
     private val homeViewModel: HomeViewModel by activityViewModels {
         serviceFactory.create(daysRange, cryptoCurrency, fiatCurrency)
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        appComponent.inject(this)
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        appComponent.inject(this)
-        binding.graphDataFragment.button.setOnClickListener {
-            Log.d("TEEST", parentFragmentManager.findFragmentById(R.id.nav_host)?.childFragmentManager?.fragments.toString())
+        binding.button.setOnClickListener {
             findNavController().navigate(R.id.action_pagerContainerFragment_to_blankFragment)
         }
 
@@ -63,18 +73,54 @@ class HomeFragment : Fragment() {
         cryptoList = resources.getStringArray(R.array.crypto_currency_arr).toMutableList()
         fiatList = resources.getStringArray(R.array.fiat_currency_arr).toMutableList()
 
-        homeViewModel.cryptoLiveData.observe(viewLifecycleOwner) {
-            listOfPrices = it.data?.priceList as ArrayList<Float>
-            setLineChartData()
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                getGraphParameters()
+            }
         }
+
+        binding.homeRefresher.setOnRefreshListener(refreshListener)
     }
 
     override fun onResume() {
         (activity as MainActivity).binding.mainToolbar.title = resources.getString(R.string.home_screen_name)
         super.onResume()
-        setDropDown(intervalList, binding.graphDataFragment.timeRangeDropdown)
-        setDropDown(cryptoList, binding.graphDataFragment.cryptoCurrencyDropdown)
-        setDropDown(fiatList, binding.graphDataFragment.fiatCurrencyDropdown)
+        binding.apply {
+            setDropDown(intervalList, graphDataFragment.intervalLayout.timeRangeDropdown)
+            setDropDown(cryptoList, graphDataFragment.currencyLayout.cryptoCurrencyDropdown)
+            setDropDown(fiatList, graphDataFragment.fiatLayout.fiatCurrencyDropdown)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (snackBarError != null) {
+            snackBarError?.dismiss()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private suspend fun getGraphParameters() {
+        homeViewModel.cryptoGraphDataState.collect { state ->
+            when(state) {
+                is DataState.Success -> {
+                    viewStateSuccess()
+                    listOfPrices = state.data!!.paramsList
+                    setLineChartData()
+                }
+                is DataState.Loading -> viewStateLoading()
+                is DataState.Error -> viewStateError()
+            }
+        }
+    }
+
+    private val refreshListener = SwipeRefreshLayout.OnRefreshListener {
+        homeViewModel.getCryptoCurrency(daysRange, cryptoCurrency, fiatCurrency)
+        binding.homeRefresher.isRefreshing = false
     }
 
     private fun setDropDown (dataList: MutableList<String>, dropDown: AutoCompleteTextView) {
@@ -104,7 +150,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setFiatCurrency() {
-        binding.graphDataFragment.fiatCurrencyDropdown.setOnItemClickListener { _, _, position, _ ->
+        binding.graphDataFragment.fiatLayout.fiatCurrencyDropdown.setOnItemClickListener { _, _, position, _ ->
             when(position) {
                 0 -> {
                     fiatCurrency = fiatList[0]
@@ -123,7 +169,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setDaysRange() {
-        binding.graphDataFragment.timeRangeDropdown.setOnItemClickListener { _, _, position, _ ->
+        binding.graphDataFragment.intervalLayout.timeRangeDropdown.setOnItemClickListener { _, _, position, _ ->
             when(position) {
                 0 -> {
                     daysRange = intervalList[0].toInt()
@@ -138,7 +184,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setCryptoCurrency() {
-        binding.graphDataFragment.cryptoCurrencyDropdown.setOnItemClickListener { _, _, position, _ ->
+        binding.graphDataFragment.currencyLayout.cryptoCurrencyDropdown.setOnItemClickListener { _, _, position, _ ->
             when(position) {
                 0 -> {
                     cryptoCurrency = cryptoList[0]
@@ -200,8 +246,8 @@ class HomeFragment : Fragment() {
         data.apply {
             axisXBottom = axisX
             axisYLeft = axisY
-            axisXBottom.lineColor = Color.BLACK
-            axisYLeft.lineColor = Color.BLACK
+            axisXBottom.lineColor = Color.WHITE
+            axisYLeft.lineColor = Color.WHITE
 
         }
         binding.chart.lineChartData = data
@@ -223,8 +269,32 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun viewStateSuccess() {
+        binding.homeErrorLayout.root.visibility = View.GONE
+        binding.chart.visibility = View.VISIBLE
+        binding.homeLoading.root.visibility = View.GONE
+        if (snackBarError != null) {
+            snackBarError?.dismiss()
+        }
+    }
+
+    private fun viewStateLoading() {
+        binding.homeErrorLayout.root.visibility = View.GONE
+        binding.homeErrorLayout.root.visibility = View.GONE
+        binding.homeLoading.root.visibility = View.VISIBLE
+    }
+
+    private fun viewStateError() {
+        binding.chart.visibility = View.INVISIBLE
+        binding.homeLoading.root.visibility = View.GONE
+        binding.homeErrorLayout.root.visibility = View.VISIBLE
+
+        if (hasInternetConnectivity(requireContext()).not()) {
+            snackBarError = getErrorSnackBar(PagerContainerFragment.bottomNavigationView)
+                .setAction(R.string.repeat) {
+                    homeViewModel.getCryptoCurrency(daysRange, cryptoCurrency, fiatCurrency)
+                }
+            snackBarError?.show()
+        }
     }
 }

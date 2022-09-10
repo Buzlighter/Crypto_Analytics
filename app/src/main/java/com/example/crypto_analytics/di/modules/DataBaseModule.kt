@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.example.crypto_analytics.data.db.CryptoDataBase
 import com.example.crypto_analytics.data.db.NewsBaseDao
 import com.example.crypto_analytics.data.util.Constants
+import com.example.crypto_analytics.data.util.Converters
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -18,8 +19,9 @@ class DataBaseModule {
         return  Room.databaseBuilder(
             application,
             CryptoDataBase::class.java,
-            Constants.DB_NAME
-        ).build()
+            Constants.DB_NAME)
+            .addTypeConverter(Converters())
+            .build()
     }
 
     @Provides

@@ -11,18 +11,22 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.crypto_analytics.R
 import com.example.crypto_analytics.databinding.FragmentPagerContainerBinding
+import com.example.crypto_analytics.ui.common.adapters.ViewPagerAdapter
 import com.example.crypto_analytics.ui.view.home_screen.HomeFragment
 import com.example.crypto_analytics.ui.view.info_screen.InfoFragment
 import com.example.crypto_analytics.ui.view.news_screen.NewsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
+import kotlin.properties.Delegates
 
 class PagerContainerFragment : Fragment() {
     var _binding: FragmentPagerContainerBinding? = null
     val binding get() = _binding!!
+    lateinit var pagerAdapter: ViewPagerAdapter
 
     companion object {
        lateinit var bottomNavigationView: BottomNavigationView
+       lateinit var viewPager: ViewPager2
     }
 
     private val  listOfFragmentTabs = listOf(
@@ -38,10 +42,10 @@ class PagerContainerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val adapter = ViewPagerAdapter(childFragmentManager, lifecycle, listOfFragmentTabs)
+        viewPager = binding.viewPager
+        pagerAdapter = ViewPagerAdapter(childFragmentManager, lifecycle, listOfFragmentTabs)
         binding.apply {
-            viewPager.adapter = adapter
+            viewPager.adapter = pagerAdapter
             viewPager.registerOnPageChangeCallback(pageListener)
             bottomNavView.setOnItemSelectedListener(itemSelectedListener)
         }

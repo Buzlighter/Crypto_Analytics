@@ -1,8 +1,9 @@
 package com.example.crypto_analytics.data.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.crypto_analytics.data.model.NewsData
+import kotlinx.coroutines.flow.Flow
+import java.util.ArrayList
 
 @Dao
 interface NewsBaseDao {
@@ -11,9 +12,9 @@ interface NewsBaseDao {
     suspend fun insert(newsData: NewsData)
 
     @Delete
-    fun deleteItem(newsData: NewsData)
+    suspend fun deleteItem(newsData: NewsData)
 
     @Query("SELECT * FROM news")
-    fun getAll(): MutableList<NewsData>
+    fun getAll(): Flow<List<NewsData>>
 
 }

@@ -14,7 +14,13 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.crypto_analytics.R
+import com.example.crypto_analytics.data.util.ExitDialog
+import com.example.crypto_analytics.data.util.ExitDialog.Companion.EXIT_DIALOG_TAG
+import com.example.crypto_analytics.data.util.getErrorSnackBar
+import com.example.crypto_analytics.data.util.hasInternetConnectivity
 import com.example.crypto_analytics.databinding.ActivityMainBinding
+import com.example.crypto_analytics.ui.common.PagerContainerFragment
+import com.google.android.material.navigation.NavigationView
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,6 +43,8 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navTooldrawView.setupWithNavController(navController)
+
+        binding.navTooldrawView.setNavigationItemSelectedListener(navigationSideBarListener)
     }
 
     private fun setToolBar() {
@@ -59,12 +67,19 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onResume() {
-        super.onResume()
+    private val navigationSideBarListener = NavigationView.OnNavigationItemSelectedListener { menu ->
+        when(menu.itemId) {
+            R.id.side_menu_wallet -> {}
+            R.id.side_menu_notification -> {}
+            else -> {
+                val exitDialog = ExitDialog()
+                exitDialog.show(supportFragmentManager, EXIT_DIALOG_TAG)
+            }
+        }
+        return@OnNavigationItemSelectedListener true
     }
 
     override fun onBackPressed() {
-
         if (appBarConfiguration.openableLayout?.isOpen == true) {
             appBarConfiguration.openableLayout?.close()
         } else {

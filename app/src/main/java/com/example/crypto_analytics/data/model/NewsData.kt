@@ -1,12 +1,14 @@
 package com.example.crypto_analytics.data.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Index
-import androidx.room.PrimaryKey
+
+import android.os.Parcel
+import android.os.Parcelable
+import androidx.room.*
 import com.example.crypto_analytics.data.util.Constants
+import com.example.crypto_analytics.data.util.Converters
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
+import kotlinx.parcelize.Parceler
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = Constants.DB_TABLE_NAME_NEWS,
     indices = [Index(value = ["author"], unique = true),
@@ -16,9 +18,13 @@ import java.io.Serializable
         Index(value = ["urlToImage"], unique = true),
         Index(value = ["publishedAt"], unique = true),
         Index(value = ["content"], unique = true)])
+@Parcelize
 data class NewsData(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
+    @SerializedName("source")
+    @ColumnInfo(name = "source")
+    val source: NewsSource?,
     @SerializedName("author")
     @ColumnInfo(name = "author")
     val author: String?,
@@ -40,4 +46,4 @@ data class NewsData(
     @SerializedName("content")
     @ColumnInfo(name = "content")
     val content: String?
-): Serializable
+): Parcelable

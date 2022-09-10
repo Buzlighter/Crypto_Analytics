@@ -3,7 +3,9 @@ package com.example.crypto_analytics.data.util
 object Constants {
     const val COINGECKO_URL = "https://api.coingecko.com/api/v3/"
     const val NEWSDATA_URL = "https://newsapi.org/v2/"
-//    const val COIN_MARKET_KEY = "J0T7SFMEMUBMIEEL"
+    const val COINMAP_URL = "https://coinmap.org/api/v1/"
+
+    const val REGULAR_NEWS_KEY_QUERY = "биткоин"
 
     const val NEWS_KEY = "72c9997f90b3469b84fee01b8824177f"
     const val LANGUAGE_NEWS_QUERY = "ru"
@@ -12,4 +14,8 @@ object Constants {
 
     const val DB_NAME = "crypto_db"
     const val DB_TABLE_NAME_NEWS = "news"
+
+    const val BUNDLE_NEWS_LIST_KEY = "newsList"
+    const val BUNDLE_NEWS_SEARCH_KEY_QUERY = "query"
+    const val BUNDLE_INFO_ATM_LIST = "ATM"
 }

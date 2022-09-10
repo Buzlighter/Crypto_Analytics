@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Crypto_Analytics</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
     <string-array name="interval_arr">
         <item>30</item>
         <item>7</item>
@@ -27,5 +29,17 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="unknown_author">Неизвестен</string>
+    <string name="repeat">Повторить</string>
+    <string name="dialog_exit_yes">ДА</string>
+    <string name="dialog_exit_no">НЕТ</string>
+    <string name="dialog_exit_fragment">ВЫЙТИ ИЗ ПРИЛОЖЕНИЯ?</string>
+
+    <string-array name="filter_arr">
+        <item>"Дата"</item>
+        <item>"Автор"</item>
+        <item>"Источник"</item>
+        <item>"Название"</item>
+        <item>"Содержание"</item>
+    </string-array>
 
 </resources>

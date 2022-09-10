@@ -16,7 +16,6 @@ class NewsHolder(val binding: NewsHolderBinding): RecyclerView.ViewHolder(bindin
             Glide
                 .with(root)
                 .load(newsItem.imageUrl)
-                .placeholder(R.drawable.fail_to_load_img)
                 .centerCrop()
                 .error(R.drawable.fail_to_load_img)
                 .into(imagePoster)
@@ -30,7 +29,7 @@ class NewsHolder(val binding: NewsHolderBinding): RecyclerView.ViewHolder(bindin
                 }
 
                 setOnLongClickListener {
-                    newsClickListener.onLongClick(newsItem, position)
+                    newsClickListener.onLongClick(binding, newsItem, position)
                     return@setOnLongClickListener true
                 }
             }
