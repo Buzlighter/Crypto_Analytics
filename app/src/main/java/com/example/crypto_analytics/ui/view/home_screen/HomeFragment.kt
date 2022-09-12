@@ -2,6 +2,8 @@ package com.example.crypto_analytics.ui.view.home_screen
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.crypto_analytics.App
 import com.example.crypto_analytics.R
 import com.example.crypto_analytics.data.util.*
 import com.example.crypto_analytics.databinding.FragmentHomeBinding
@@ -65,10 +68,6 @@ class HomeFragment : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.button.setOnClickListener {
-            findNavController().navigate(R.id.action_pagerContainerFragment_to_blankFragment)
-        }
-
         intervalList = resources.getStringArray(R.array.interval_arr).toMutableList()
         cryptoList = resources.getStringArray(R.array.crypto_currency_arr).toMutableList()
         fiatList = resources.getStringArray(R.array.fiat_currency_arr).toMutableList()
@@ -80,6 +79,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.homeRefresher.setOnRefreshListener(refreshListener)
+        binding.notificationInputText.addTextChangedListener(textInputWatcher)
     }
 
     override fun onResume() {
@@ -269,25 +269,45 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private val textInputWatcher = object : TextWatcher {
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            App.notificationPrice = binding.notificationInputText.text.toString().toFloat()
+        }
+    }
+
+
+    //View States
+
     private fun viewStateSuccess() {
-        binding.homeErrorLayout.root.visibility = View.GONE
         binding.chart.visibility = View.VISIBLE
+        binding.notificationInputLayout.visibility = View.VISIBLE
+        binding.homeErrorLayout.root.visibility = View.GONE
         binding.homeLoading.root.visibility = View.GONE
+
         if (snackBarError != null) {
             snackBarError?.dismiss()
         }
     }
 
     private fun viewStateLoading() {
-        binding.homeErrorLayout.root.visibility = View.GONE
-        binding.homeErrorLayout.root.visibility = View.GONE
         binding.homeLoading.root.visibility = View.VISIBLE
+        binding.homeErrorLayout.root.visibility = View.GONE
+        binding.homeErrorLayout.root.visibility = View.GONE
+        binding.notificationInputLayout.visibility = View.GONE
     }
 
     private fun viewStateError() {
+        binding.homeErrorLayout.root.visibility = View.VISIBLE
         binding.chart.visibility = View.INVISIBLE
         binding.homeLoading.root.visibility = View.GONE
-        binding.homeErrorLayout.root.visibility = View.VISIBLE
+        binding.notificationInputLayout.visibility = View.GONE
 
         if (hasInternetConnectivity(requireContext()).not()) {
             snackBarError = getErrorSnackBar(PagerContainerFragment.bottomNavigationView)

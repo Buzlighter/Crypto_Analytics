@@ -4,6 +4,7 @@
     android:id="@+id/info_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_grey"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.view.info_screen.InfoFragment">
 
@@ -32,4 +33,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/map_container"/>
+
+    <include
+        android:id="@+id/layout_text_info"
+        layout = "@layout/info_text_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@id/replace_btn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

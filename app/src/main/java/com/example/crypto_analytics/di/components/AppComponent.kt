@@ -1,6 +1,7 @@
 package com.example.crypto_analytics.di.components
 
 import com.example.crypto_analytics.App
+import com.example.crypto_analytics.data.api.CryptoService
 import com.example.crypto_analytics.data.api.NewsDataService
 import com.example.crypto_analytics.data.db.NewsBaseDao
 import com.example.crypto_analytics.di.modules.*
@@ -28,5 +29,7 @@ interface AppComponent {
     fun inject(mapsFragment: MapsFragment)
 
     fun inject(listNewsFragment: ListNewsFragment)
+
+    fun getCryptoService(): CryptoService
 
 }

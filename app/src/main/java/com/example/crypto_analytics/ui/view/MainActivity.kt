@@ -3,24 +3,24 @@ package com.example.crypto_analytics.ui.view
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.*
 import com.example.crypto_analytics.R
+import com.example.crypto_analytics.data.util.Constants
+import com.example.crypto_analytics.data.util.CryptoWorkManager
 import com.example.crypto_analytics.data.util.ExitDialog
 import com.example.crypto_analytics.data.util.ExitDialog.Companion.EXIT_DIALOG_TAG
-import com.example.crypto_analytics.data.util.getErrorSnackBar
-import com.example.crypto_analytics.data.util.hasInternetConnectivity
 import com.example.crypto_analytics.databinding.ActivityMainBinding
-import com.example.crypto_analytics.ui.common.PagerContainerFragment
 import com.google.android.material.navigation.NavigationView
+import java.sql.Time
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController
 
     lateinit var appBarConfiguration: AppBarConfiguration
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +46,24 @@ class MainActivity : AppCompatActivity() {
         binding.navTooldrawView.setupWithNavController(navController)
 
         binding.navTooldrawView.setNavigationItemSelectedListener(navigationSideBarListener)
+
+        setWorkManager()
+    }
+
+
+    private fun setWorkManager() {
+        val workRequest = PeriodicWorkRequestBuilder<CryptoWorkManager>(
+            16, TimeUnit.MINUTES)
+//            5, TimeUnit.MINUTES)
+            .setConstraints(Constraints
+                .Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+            )
+            .build()
+
+       val workManager = WorkManager.getInstance(applicationContext)
+       workManager.enqueueUniquePeriodicWork(Constants.WORKMANAGER_UNIQUE_NAME, ExistingPeriodicWorkPolicy.KEEP, workRequest)
     }
 
     private fun setToolBar() {

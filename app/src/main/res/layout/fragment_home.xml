@@ -12,14 +12,14 @@
             android:layout_width="match_parent"
             android:layout_height="350dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            app:layout_constraintTop_toTopOf="parent">
 
                 <lecho.lib.hellocharts.view.LineChartView
                     android:id="@+id/chart"
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
-                    android:layout_margin="5dp"
                     android:visibility="invisible" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -29,7 +29,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/home_refresher"
-            android:layout_margin="5dp" />
+            android:layout_margin="20dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/notification_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconDrawable="@drawable/ic_baseline_notifications"
+            android:hint="Стоимость"
+            android:layout_margin="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/graph_data_fragment">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/notification_input_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <include layout="@layout/page_error_layout"
             android:id="@+id/home_error_layout"
@@ -40,16 +59,6 @@
             app:layout_constraintStart_toStartOf="@id/home_refresher"
             app:layout_constraintEnd_toEndOf="@id/home_refresher"
             app:layout_constraintBottom_toBottomOf="@id/home_refresher"/>
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="button"
-            app:layout_constraintTop_toBottomOf="@id/graph_data_fragment"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
 
         <include
             layout="@layout/loading_view_layout"
