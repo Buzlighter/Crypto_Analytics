@@ -3,7 +3,6 @@ package com.example.crypto_analytics.data.db
 import androidx.room.*
 import com.example.crypto_analytics.data.model.NewsData
 import kotlinx.coroutines.flow.Flow
-import java.util.ArrayList
 
 @Dao
 interface NewsBaseDao {

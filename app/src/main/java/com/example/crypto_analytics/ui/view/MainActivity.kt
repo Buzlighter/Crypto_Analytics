@@ -3,8 +3,6 @@ package com.example.crypto_analytics.ui.view
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.view.ViewGroup
-import android.widget.Button
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -20,9 +18,6 @@ import com.example.crypto_analytics.data.util.ExitDialog
 import com.example.crypto_analytics.data.util.ExitDialog.Companion.EXIT_DIALOG_TAG
 import com.example.crypto_analytics.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
-import java.lang.RuntimeException
-import java.sql.Time
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -55,8 +50,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setWorkManager() {
         val workRequest = PeriodicWorkRequestBuilder<CryptoWorkManager>(
-            16, TimeUnit.MINUTES)
-//            5, TimeUnit.MINUTES)
+            16, TimeUnit.MINUTES,
+            5,  TimeUnit.MINUTES)
             .setConstraints(Constraints
                 .Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)

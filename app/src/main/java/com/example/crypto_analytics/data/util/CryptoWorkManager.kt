@@ -13,7 +13,6 @@ import com.example.crypto_analytics.App
 import com.example.crypto_analytics.R
 import com.example.crypto_analytics.ui.view.MainActivity
 import java.util.*
-import kotlin.math.roundToInt
 import kotlin.random.Random
 
 class CryptoWorkManager(private val context: Context,
@@ -32,7 +31,6 @@ class CryptoWorkManager(private val context: Context,
             showNotification()
         }
 
-
         if(response.isSuccessful.not()) {
             return Result.failure(
                 workDataOf(Constants.WORKER_KEY_ERROR to "Ошибка подключения")
@@ -45,29 +43,19 @@ class CryptoWorkManager(private val context: Context,
     }
 
     private suspend fun showNotification() {
-        val pendingIntent = PendingIntent.getActivity(
-            context,
-            0,
-            Intent(context, MainActivity::class.java),
-            PendingIntent.FLAG_ONE_SHOT)
 
         val notificationBuilder =
             NotificationCompat
                 .Builder(context, Constants.NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_baseline_wallet)
-                .setContentText("Биткоин вырос")
+                .setContentText("Биткоин превысил ${App.notificationPrice}")
                 .setContentTitle("ВРЕМЯ СКУПАТЬ")
-                .setAutoCancel(false)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .build()
 
         val foregroundInfo = ForegroundInfo(Random.nextInt(), notificationBuilder)
 
         setForeground(foregroundInfo)
-    }
-
-    fun setPrice() {
-
     }
 }

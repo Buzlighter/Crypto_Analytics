@@ -1,7 +1,6 @@
 package com.example.crypto_analytics.di.modules
 
 import com.example.crypto_analytics.data.api.CoinMapService
-import com.example.crypto_analytics.data.api.NewsDataService
 import com.example.crypto_analytics.data.util.Constants
 import dagger.Module
 import dagger.Provides

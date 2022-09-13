@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.crypto_analytics.R
-import com.example.crypto_analytics.data.model.NewsData
 import com.example.crypto_analytics.data.util.Constants
 import com.example.crypto_analytics.data.util.OnItemFilterClickListener
 import com.example.crypto_analytics.data.util.appComponent
@@ -20,7 +19,6 @@ import com.example.crypto_analytics.databinding.FragmentNewsBinding
 import com.example.crypto_analytics.ui.common.adapters.NewsFilterHorizontalAdapter
 import com.example.crypto_analytics.ui.view.MainActivity
 import com.google.android.material.button.MaterialButtonToggleGroup
-import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 

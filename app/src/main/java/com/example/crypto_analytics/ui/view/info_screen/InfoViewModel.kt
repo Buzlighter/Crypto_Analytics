@@ -1,14 +1,14 @@
 package com.example.crypto_analytics.ui.view.info_screen
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.crypto_analytics.data.model.ATM
-import com.example.crypto_analytics.data.model.CoinMapData
 import com.example.crypto_analytics.data.source.CryptoInfoSource
 import com.example.crypto_analytics.data.util.DataState
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class InfoViewModel(private val cryptoInfoSource: CryptoInfoSource) : ViewModel() {

@@ -2,10 +2,8 @@ package com.example.crypto_analytics.ui.common.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View.inflate
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.res.ComplexColorCompat.inflate
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView

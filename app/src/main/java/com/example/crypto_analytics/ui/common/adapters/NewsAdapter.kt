@@ -1,9 +1,7 @@
 package com.example.crypto_analytics.ui.common.adapters
 
 import android.content.Context
-import android.view.GestureDetector
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil

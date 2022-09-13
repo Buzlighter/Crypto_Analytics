@@ -17,7 +17,6 @@ import com.example.crypto_analytics.ui.view.info_screen.InfoFragment
 import com.example.crypto_analytics.ui.view.news_screen.NewsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
-import kotlin.properties.Delegates
 
 class PagerContainerFragment : Fragment() {
     var _binding: FragmentPagerContainerBinding? = null

@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.crypto_analytics.R
-import kotlin.system.exitProcess
 
 class ExitDialog: DialogFragment() {
     companion object {

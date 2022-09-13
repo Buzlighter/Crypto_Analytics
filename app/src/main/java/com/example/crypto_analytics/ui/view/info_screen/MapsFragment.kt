@@ -6,14 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.example.crypto_analytics.R
 import com.example.crypto_analytics.data.model.ATM
 import com.example.crypto_analytics.data.util.Constants
-import com.example.crypto_analytics.data.util.DataState
 import com.example.crypto_analytics.data.util.appComponent
 import com.example.crypto_analytics.databinding.FragmentMapsBinding
 import com.example.crypto_analytics.ui.common.PagerContainerFragment
@@ -23,22 +19,34 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MapsFragment : Fragment() {
     var _binding: FragmentMapsBinding? = null
     val binding get() = _binding!!
 
-    private var listOfATM = arrayListOf<ATM>()
+    private var listOfATM = listOf<ATM>()
     val moscow = LatLng(55.751244, 37.618423)
 
     private val callback = OnMapReadyCallback { googleMap ->
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(moscow))
 
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(moscow, 8F))
+        val region = googleMap.projection.visibleRegion
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(moscow, 8F))
         listOfATM.forEach { atmData ->
-            val point = LatLng(atmData.latitude.toDouble(), atmData.lontitude.toDouble())
-            googleMap.addMarker(MarkerOptions().position(point).title(atmData.name))
+                val point = LatLng(atmData.latitude.toDouble(), atmData.lontitude.toDouble())
+                googleMap.addMarker(MarkerOptions().position(point).title(atmData.name))
+        }
+
+        Log.v("bounds_loc","bottom left corner: ${region.nearLeft}" )
+        Log.v("bounds_loc","top left corner ${region.farLeft}")
+        Log.v("bounds_loc","bottom right corner ${region.nearRight}")
+        Log.v("bounds_loc","top right corner ${region.farRight}")
+
+        googleMap.setOnMapClickListener {coordinate->
+            Log.v("bounds_loc","clicked: $coordinate")
         }
     }
 
@@ -52,11 +60,17 @@ class MapsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         PagerContainerFragment.viewPager.isUserInputEnabled = false
+
+        listOfATM = arguments?.getParcelableArrayList(Constants.BUNDLE_INFO_ATM_LIST) ?: arrayListOf()
+
+        lifecycleScope.launch(Dispatchers.Default) {
+            listOfATM = listOfATM.filter { atmData ->  atmData.latitude in 53F..57F && atmData.lontitude in 36F..39F }
+        }
+
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
 
-        listOfATM = arguments?.getParcelableArrayList(Constants.BUNDLE_INFO_ATM_LIST) ?: arrayListOf()
-        Log.i("my_atm", listOfATM.size.toString())
+        Log.v("my_atm", listOfATM.size.toString())
 
         mapFragment?.getMapAsync { googleMap ->
             googleMap.setOnCameraMoveStartedListener(startCameraListener)

@@ -3,7 +3,9 @@ package com.example.crypto_analytics.ui.view.info_screen
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
@@ -23,8 +25,6 @@ import javax.inject.Inject
 class InfoFragment : Fragment() {
     private var _binding: FragmentInfoBinding? = null
     private val binding get() = _binding!!
-
-//    lateinit var infoFragment: InfoFragment
 
     private var listOfATM = listOf<ATM>()
     private var bundleOfATM = Bundle()

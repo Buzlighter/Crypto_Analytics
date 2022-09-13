@@ -3,7 +3,8 @@ package com.example.crypto_analytics.data.source
 import com.example.crypto_analytics.data.api.CryptoService
 import com.example.crypto_analytics.data.model.CryptoGraphData
 import com.example.crypto_analytics.data.util.DataState
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import kotlin.math.roundToInt
 

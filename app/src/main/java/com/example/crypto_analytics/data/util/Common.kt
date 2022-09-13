@@ -1,7 +1,6 @@
 package com.example.crypto_analytics.data.util
 
 import android.content.Context
-import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
@@ -9,13 +8,8 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.example.crypto_analytics.R
-import com.example.crypto_analytics.data.model.NewsData
-import com.example.crypto_analytics.ui.common.PagerContainerFragment
-import com.example.crypto_analytics.ui.common.adapters.NewsAdapter
-import com.example.crypto_analytics.ui.view.news_screen.NewsViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.Job
 
 fun customDeleteAnimation(view: View?, context: Context, duration: Long) {
     if (view != null) {
