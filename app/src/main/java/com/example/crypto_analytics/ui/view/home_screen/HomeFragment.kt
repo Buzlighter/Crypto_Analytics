@@ -9,16 +9,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Button
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.crypto_analytics.App
 import com.example.crypto_analytics.R
-import com.example.crypto_analytics.data.util.*
+import com.example.crypto_analytics.data.util.DataState
+import com.example.crypto_analytics.data.util.appComponent
+import com.example.crypto_analytics.data.util.getErrorSnackBar
+import com.example.crypto_analytics.data.util.hasInternetConnectivity
 import com.example.crypto_analytics.databinding.FragmentHomeBinding
 import com.example.crypto_analytics.ui.common.PagerContainerFragment
 import com.example.crypto_analytics.ui.view.MainActivity
@@ -86,9 +90,9 @@ class HomeFragment : Fragment() {
         (activity as MainActivity).binding.mainToolbar.title = resources.getString(R.string.home_screen_name)
         super.onResume()
         binding.apply {
-            setDropDown(intervalList, graphDataFragment.intervalLayout.timeRangeDropdown)
-            setDropDown(cryptoList, graphDataFragment.currencyLayout.cryptoCurrencyDropdown)
-            setDropDown(fiatList, graphDataFragment.fiatLayout.fiatCurrencyDropdown)
+            setDropDown(intervalList, graphDataLayout.intervalLayout.timeRangeDropdown)
+            setDropDown(cryptoList, graphDataLayout.currencyLayout.cryptoCurrencyDropdown)
+            setDropDown(fiatList, graphDataLayout.fiatLayout.fiatCurrencyDropdown)
         }
     }
 
@@ -150,7 +154,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setFiatCurrency() {
-        binding.graphDataFragment.fiatLayout.fiatCurrencyDropdown.setOnItemClickListener { _, _, position, _ ->
+        binding.graphDataLayout.fiatLayout.fiatCurrencyDropdown.setOnItemClickListener { _, _, position, _ ->
             when(position) {
                 0 -> {
                     fiatCurrency = fiatList[0]
@@ -169,8 +173,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setDaysRange() {
-        binding.graphDataFragment.intervalLayout.timeRangeDropdown.setOnItemClickListener { _, _, position, _ ->
-            when(position) {
+        binding.graphDataLayout.intervalLayout.timeRangeDropdown.setOnItemClickListener { _, _, position, _ ->
+            when (position) {
                 0 -> {
                     daysRange = intervalList[0].toInt()
                     homeViewModel.getCryptoCurrency(daysRange, cryptoCurrency, fiatCurrency)
@@ -184,7 +188,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setCryptoCurrency() {
-        binding.graphDataFragment.currencyLayout.cryptoCurrencyDropdown.setOnItemClickListener { _, _, position, _ ->
+        binding.graphDataLayout.currencyLayout.cryptoCurrencyDropdown.setOnItemClickListener { _, _, position, _ ->
             when(position) {
                 0 -> {
                     cryptoCurrency = cryptoList[0]
@@ -222,7 +226,7 @@ class HomeFragment : Fragment() {
         line.apply {
             shape = ValueShape.CIRCLE
             setHasLabelsOnlyForSelected(true)
-            color = Color.BLUE
+            color = ContextCompat.getColor(requireContext().applicationContext, R.color.green)
             isCubic = true
             isFilled = true
         }
@@ -277,8 +281,10 @@ class HomeFragment : Fragment() {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         }
 
-        override fun afterTextChanged(s: Editable?) {
-            App.notificationPrice = binding.notificationInputText.text.toString().toFloat()
+        override fun afterTextChanged(editCost: Editable?) {
+            if (editCost?.isNotEmpty() == true)  {
+                App.notificationPrice = editCost.toString().toFloat()
+            }
         }
     }
 
@@ -287,6 +293,7 @@ class HomeFragment : Fragment() {
 
     private fun viewStateSuccess() {
         binding.chart.visibility = View.VISIBLE
+        binding.graphDataLayout.root.visibility = View.VISIBLE
         binding.notificationInputLayout.visibility = View.VISIBLE
         binding.homeErrorLayout.root.visibility = View.GONE
         binding.homeLoading.root.visibility = View.GONE
@@ -298,6 +305,7 @@ class HomeFragment : Fragment() {
 
     private fun viewStateLoading() {
         binding.homeLoading.root.visibility = View.VISIBLE
+        binding.graphDataLayout.root.visibility = View.VISIBLE
         binding.homeErrorLayout.root.visibility = View.GONE
         binding.homeErrorLayout.root.visibility = View.GONE
         binding.notificationInputLayout.visibility = View.GONE
@@ -308,6 +316,7 @@ class HomeFragment : Fragment() {
         binding.chart.visibility = View.INVISIBLE
         binding.homeLoading.root.visibility = View.GONE
         binding.notificationInputLayout.visibility = View.GONE
+        binding.graphDataLayout.root.visibility = View.GONE
 
         if (hasInternetConnectivity(requireContext()).not()) {
             snackBarError = getErrorSnackBar(PagerContainerFragment.bottomNavigationView)

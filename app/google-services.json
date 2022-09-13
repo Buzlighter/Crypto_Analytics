@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "665139440853",
+    "project_id": "crypto-analytics-23ed9",
+    "storage_bucket": "crypto-analytics-23ed9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665139440853:android:6a81c3fb76a61008fbc65c",
+        "android_client_info": {
+          "package_name": "com.example.crypto_analytics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "665139440853-obqnegucvd5nqjg35f0d4tca304mhi6e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfiJzAxv79IUj9LZTN3Y3AaJZruDujrBY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "665139440853-obqnegucvd5nqjg35f0d4tca304mhi6e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

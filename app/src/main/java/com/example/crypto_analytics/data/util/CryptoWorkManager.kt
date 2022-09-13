@@ -26,21 +26,9 @@ class CryptoWorkManager(private val context: Context,
             .getCryptoService()
             .getCryptoCurrency("bitcoin", "rub", "30", "daily")
 
-        val listOfPrice = mutableListOf<Float>()
-        response.body()?.let { body ->
-            body.prices.forEach { list ->
-                list.map {
-                    if (list.indexOf(it) % 2 != 0) {
-                        val roundedPrice = (it * 10).roundToInt().toFloat() / 10
-                        listOfPrice.add(roundedPrice)
-                    }
-                }
-            }
-        }
+        val lastPriceValue = response.body()?.prices?.last()?.last()?.toFloat() ?: 0F
 
-        val maxPriceValue = listOfPrice.maxOrNull() ?: 0F
-
-        if (maxPriceValue >= App.notificationPrice)  {
+        if (lastPriceValue >= App.notificationPrice)  {
             showNotification()
         }
 
@@ -52,7 +40,7 @@ class CryptoWorkManager(private val context: Context,
         }
 
         return Result.success(
-            workDataOf(Constants.CRYPTO_WORKER_KEY to maxPriceValue)
+            workDataOf(Constants.CRYPTO_WORKER_KEY to lastPriceValue)
         )
     }
 
